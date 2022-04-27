@@ -1,3 +1,6 @@
+computerPoints = 0;
+humanPoints = 0;
+
 function computerPlay() {
     let choice = Math.floor(Math.random() * 3);
     
@@ -19,16 +22,24 @@ function playRound(computer, human) {
     else if ((computer === "Rock" && human === "Scissors") || 
              (computer === "Paper" && human === "Rock") || 
              (computer === "Scissors" && human === "Paper")) {
+                 computerPoints++;
                  return "Computer wins. " + computer + " beats " + human + ".";
              }
     else {
+        humanPoints++;
         return "You win. " + human + " beats " + computer + ".";
     }
-
+}
+function game() {
+    for (let i = 0; i < 5; i++) {
+        computerChoice = computerPlay();
+        playerChoice = (prompt("Rock, paper, or scissors?")).toLowerCase();
+        console.log(playRound(computerChoice, playerChoice));
+    }
+    console.log("Point Counts:" + "\n\tComputer: " + computerPoints + "\n\tYou: " + humanPoints)
 }
 
-computerChoice = computerPlay();
-playerChoice = (prompt("Rock, paper, or scissors?")).toLowerCase();
-console.log(playRound(computerChoice, playerChoice));
+game();
+
 
 
