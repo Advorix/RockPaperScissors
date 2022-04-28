@@ -1,5 +1,10 @@
-computerPoints = 0;
-humanPoints = 0;
+let computerPoints = 0;
+let humanPoints = 0;
+let rockButton = document.querySelector("#rock");
+let paperButton = document.querySelector("#paper");
+let scissorsButton = document.querySelector("#scissors");
+let results = document.querySelector("#results");
+let points = document.querySelector("#points");
 
 function computerPlay() {
     let choice = Math.floor(Math.random() * 3);
@@ -11,35 +16,47 @@ function computerPlay() {
     }
     return choice;
 }
-function capitalize(word) {
-    return word[0].toUpperCase() + word.substring(1);
-}
 function playRound(computer, human) {
-    human = capitalize(human);
     if (computer === human) {
-        return "It's a tie. " + computer + " and " + human;
+        results.textContent = "It's a tie. " + computer + " and " + human;
     }
     else if ((computer === "Rock" && human === "Scissors") || 
              (computer === "Paper" && human === "Rock") || 
              (computer === "Scissors" && human === "Paper")) {
                  computerPoints++;
-                 return "Computer wins. " + computer + " beats " + human + ".";
+                 results.textContent = "Computer wins. " + computer + " beats " + human + ".";
              }
     else {
         humanPoints++;
-        return "You win. " + human + " beats " + computer + ".";
+        results.textContent = "You win. " + human + " beats " + computer + ".";
     }
-}
+    points.innerText = "Point Counts:" + "\nComputer: " + computerPoints + "\n   You: " + humanPoints
+    checkPoints(computerPoints, humanPoints);
+} 
 function game() {
-    for (let i = 0; i < 5; i++) {
+    rockButton.addEventListener('click', function (e) {
         computerChoice = computerPlay();
-        playerChoice = (prompt("Rock, paper, or scissors?")).toLowerCase();
-        console.log(playRound(computerChoice, playerChoice));
-    }
-    console.log("Point Counts:" + "\n\tComputer: " + computerPoints + "\n\tYou: " + humanPoints)
+        playRound(computerChoice, 'Rock');
+    });
+    paperButton.addEventListener('click', function (e) {
+        computerChoice = computerPlay();
+        playRound(computerChoice, 'Paper');
+    });
+    scissorsButton.addEventListener('click', function (e) {
+        computerChoice = computerPlay();
+        playRound(computerChoice, 'Scissors')
+    })
 }
-
+function checkPoints (computerPoints, humanPoints) {
+    if (computerPoints == 5 || humanPoints == 5) {
+        if (computerPoints === 5) {
+            results.textContent = "Game Over! Computer is the final winner."
+        }
+        else {
+            results.textContent = "Game Over! You are the final winner."
+        }
+        points.textContent = ""
+    }
+}
 game();
-
-
 
